@@ -1,0 +1,20 @@
+name: Test AWS
+on:
+  workflow_dispatch:
+
+jobs:
+  test-aws:
+    runs-on: ubuntu-latest
+    environment: aws
+    env:
+      DUPLO_TOKEN: ${{ secrets.DUPLO_TOKEN }}
+      DUPLO_HOST: ${{ secrets.DUPLO_HOST }}
+      DUPLO_TENANT: ${{ secrets.DUPLO_TENANT }}
+    steps:
+      - name: Duplo Setup AWS
+        uses: mkuntaDuplo/actions@node24-test
+        with:
+          region: us-east-1
+
+      - name: Verify AWS
+        run: aws sts get-caller-identity
