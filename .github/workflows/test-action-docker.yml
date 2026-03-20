@@ -11,7 +11,10 @@ jobs:
       DUPLO_HOST: ${{ secrets.DUPLO_HOST }}
       DUPLO_TENANT: ${{ secrets.DUPLO_TENANT }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Setup Node24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
 
       - name: Duplo Setup AWS
         uses: mkuntaDuplo/actions@node24-test
