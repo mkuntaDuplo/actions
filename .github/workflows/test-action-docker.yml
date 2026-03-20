@@ -1,0 +1,33 @@
+name: Test Docker Build
+on:
+  workflow_dispatch:
+
+jobs:
+  test-docker:
+    runs-on: ubuntu-latest
+    environment: aws
+    env:
+      DUPLO_TOKEN: ${{ secrets.DUPLO_TOKEN }}
+      DUPLO_HOST: ${{ secrets.DUPLO_HOST }}
+      DUPLO_TENANT: ${{ secrets.DUPLO_TENANT }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Duplo Setup AWS
+        uses: mkuntaDuplo/actions@node24-test
+        with:
+          region: us-east-1
+
+      - name: Create test Dockerfile
+        run: |
+          echo "FROM alpine:latest" > Dockerfile
+          echo "RUN echo hello" >> Dockerfile
+
+      - name: Build Docker Image
+        uses: mkuntaDuplo/actions/build-image@node24-test
+        with:
+          repo: test-node24
+          push: "false"
+
+      - name: Verify Node24
+        run: node --version
