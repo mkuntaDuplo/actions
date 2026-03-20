@@ -11,9 +11,10 @@ jobs:
       DUPLO_HOST: https://qa-gcp-newinstall.duplocloud.net/
       DUPLO_TENANT: mounica
     steps:
-      - name: Duplo Setup GCP
-        uses: mkuntaDuplo/actions@node24-test
+     - name: Setup Node24
+        uses: actions/setup-node@v4
         with:
+          node-version: '24'
           region: us-central1
           account-id: ${{ secrets.GCP_PROJECT_ID }}
 
