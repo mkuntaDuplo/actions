@@ -10,12 +10,17 @@ jobs:
       DUPLO_TOKEN: ${{ secrets.DUPLO_TOKEN }}
       DUPLO_HOST: https://qa-gcp-newinstall.duplocloud.net/
       DUPLO_TENANT: mounica
-    steps:
-      - uses: actions/checkout@v6
+      steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: mkuntaDuplo/actions
+          ref: node24-test
+
       - uses: ./
         with:
           region: us-central1
           account-id: ${{ secrets.GCP_PROJECT_ID }}
+
       - run: |
           gcloud version
           gcloud auth list
