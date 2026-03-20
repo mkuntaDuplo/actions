@@ -1,0 +1,23 @@
+name: Test GCP
+on:
+  workflow_dispatch:
+
+jobs:
+  test-gcp:
+    runs-on: ubuntu-latest
+    environment: gcp
+    env:
+      DUPLO_TOKEN: ${{ secrets.DUPLO_TOKEN }}
+      DUPLO_HOST: https://qa-gcp-newinstall.duplocloud.net/
+      DUPLO_TENANT: mounica
+    steps:
+      - name: Duplo Setup GCP
+        uses: mkuntaDuplo/actions@node24-test
+        with:
+          region: us-central1
+          account-id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Verify gcloud
+        run: |
+          gcloud version
+          gcloud auth list
